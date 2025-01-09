@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./input.css";
+import Order from "./Components/Orders/Orders";
+import Product from "./Components/Products/Products"; 
 
 const products = [
   { id: 1, name: "Item 1", price: 10, weight: 200 },
@@ -12,77 +14,80 @@ const products = [
   { id: 8, name: "Item 8", price: 120, weight: 500 },
   { id: 9, name: "Item 9", price: 130, weight: 790 },
   { id: 10, name: "Item 10", price: 20, weight: 100 },
+  { id: 11, name: "Item 11", price: 10, weight: 340 },
+  { id: 12, name: "Item 12", price: 4, weight: 800 },
+  { id: 13, name: "Item 13", price: 5, weight: 200 },
+  { id: 14, name: "Item 14", price: 240, weight: 20 },
+  { id: 15, name: "Item 15", price: 123, weight: 700 },
+  { id: 16, name: "Item 16", price: 245, weight: 10 },
+  { id: 17, name: "Item 17", price: 230, weight: 20 },
+  { id: 18, name: "Item 18", price: 110, weight: 200 },
+  { id: 19, name: "Item 19", price: 45, weight: 200 },
+  { id: 20, name: "Item 20", price: 67, weight: 20 },
+  { id: 21, name: "Item 21", price: 88, weight: 300 },
+  { id: 22, name: "Item 22", price: 10, weight: 500 },
+  { id: 23, name: "Item 23", price: 17, weight: 250 },
+  { id: 24, name: "Item 24", price: 19, weight: 10 },
+  { id: 25, name: "Item 25", price: 89, weight: 10 },
+  { id: 26, name: "Item 26", price: 45, weight: 500 },
+  { id: 27, name: "Item 27", price: 99, weight: 790 },
+  { id: 28, name: "Item 28", price: 125, weight: 100 },
+  { id: 29, name: "Item 29", price: 198, weight: 340 },
+  { id: 30, name: "Item 30", price: 220, weight: 800 },
+  { id: 31, name: "Item 31", price: 249, weight: 200 },
+  { id: 32, name: "Item 32", price: 230, weight: 20 },
+  { id: 33, name: "Item 33", price: 190, weight: 700 },
+  { id: 34, name: "Item 34", price: 45, weight: 10 },
+  { id: 35, name: "Item 35", price: 12, weight: 20 },
+  { id: 36, name: "Item 36", price: 5, weight: 200 },
+  { id: 37, name: "Item 37", price: 2, weight: 200 },
+  { id: 38, name: "Item 38", price: 90, weight: 20 },
+  { id: 39, name: "Item 39", price: 12, weight: 300 },
+  { id: 40, name: "Item 40", price: 167, weight: 500 },
+  { id: 41, name: "Item 41", price: 12, weight: 250 },
+  { id: 42, name: "Item 42", price: 8, weight: 10 },
+  { id: 43, name: "Item 43", price: 2, weight: 10 },
+  { id: 44, name: "Item 44", price: 9, weight: 500 },
+  { id: 45, name: "Item 45", price: 210, weight: 790 },
+  { id: 46, name: "Item 46", price: 167, weight: 100 },
+  { id: 47, name: "Item 47", price: 23, weight: 340 },
+  { id: 48, name: "Item 48", price: 190, weight: 800 },
+  { id: 49, name: "Item 49", price: 199, weight: 200 },
+  { id: 50, name: "Item 50", price: 12, weight: 20 },
 ];
 
 function App() {
   const [selectedProducts, setSelectedProducts] = useState([]);
 
-  // Handle checkbox toggle
-  const handleCheckboxChange = (product) => {
-    setSelectedProducts((prev) =>
-      prev.includes(product)
-        ? prev.filter((p) => p !== product)
-        : [...prev, product]
+  // Handle adding/removing a product from the selected list
+  const handleOrderClick = (product) => {
+    setSelectedProducts(
+      (prev) =>
+        prev.some((p) => p.id === product.id)
+          ? prev.filter((p) => p.id !== product.id) // Remove product if already selected
+          : [...prev, product] // Add product if not selected
     );
   };
 
-  // Calculate total price and weight
-  const totalPrice = selectedProducts.reduce(
-    (sum, product) => sum + product.price,
-    0
-  );
-  const totalWeight = selectedProducts.reduce(
-    (sum, product) => sum + product.weight,
-    0
-  );
-
   return (
     <div className='min-h-screen bg-gray-100 p-8 flex flex-col items-start'>
-      {/* Order Summary - Now at Top-Left */}
-      <div className=' md:absolute w-80 bg-gray-50 p-6 rounded-lg shadow-lg mb-8'>
-        <h2 className='text-xl font-semibold mb-4'>Order Summary</h2>
-        <ul className='mb-4'>
-          {selectedProducts.map((product) => (
-            <li key={product.id} className='flex justify-between'>
-              <span>{product.name}</span>
-              <span>
-                ${product.price} - {product.weight}g
-              </span>
-            </li>
-          ))}
-        </ul>
-        <div className='flex justify-between font-bold text-lg'>
-          <span>Total Price:</span>
-          <span>${totalPrice}</span>
-        </div>
-        <div className='flex justify-between font-bold text-lg mt-2'>
-          <span>Total Weight:</span>
-          <span>{totalWeight}g</span>
-        </div>
-      </div>
+      {/* Order Summary */}
+      <Order selectedProducts={selectedProducts} />
 
-      <div className='w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg'>
+      {/* Product Grid */}
+      <div className='w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg mt-6'>
         <h1 className='text-3xl font-semibold text-center mb-6'>
           Product Selection
         </h1>
 
-        {/* Product Grid */}
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
           {products.map((product) => (
-            <div
+            <Product
               key={product.id}
-              className='border p-4 rounded-lg shadow-sm hover:shadow-md transition'>
-              <div className='flex items-center justify-between'>
-                <h3 className='text-lg font-semibold'>{product.name}</h3>
-                <input
-                  type='checkbox'
-                  checked={selectedProducts.includes(product)}
-                  onChange={() => handleCheckboxChange(product)}
-                />
-              </div>
-              <p className='text-gray-600'>Price: ${product.price}</p>
-              <p className='text-gray-600'>Weight: {product.weight}g</p>
-            </div>
+              product={product}
+              isSelected={selectedProducts.some((p) => p.id === product.id)}
+              onOrderClick={handleOrderClick} // Pass handleOrderClick to Product
+            />
           ))}
         </div>
       </div>

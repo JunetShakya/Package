@@ -22,3 +22,37 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Vite build output
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE or Editor specific files
+.vscode/
+.idea/
+*.swp
+
+# Nodemon
+.nodemon
+
+# macOS files
+.DS_Store
+
+# Linux files
+*.pid
+
+# Windows files
+Thumbs.db
+
